@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#ffffff">
+  <meta name="description" content="Probing what reconstruction-trained motion tokenizers preserve about co-speech gesture semantics. MINT Workshop at EMNLP 2026.">
+  <meta property="og:title" content="Do Motion Tokenizers Encode Gesture Semantics?">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://probing-motion-tokenizer.github.io/">
+  <meta property="og:image" content="https://probing-motion-tokenizer.github.io/figure-3.png">
+  <link rel="canonical" href="https://probing-motion-tokenizer.github.io/">
+  <title>Do Motion Tokenizers for Co-Speech Gesture Generation Encode Gesture Semantics?</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans" rel="stylesheet">
+  <link rel="stylesheet" href="bulma.min.css"><link rel="stylesheet" href="nerfies.css"><link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head><body>
+<a class="skip-link" href="#main">Skip to content</a>
+<main id="main">
+<section class="hero publication-header">
+  <div class="hero-body"><div class="container is-max-desktop">
+    <div class="columns is-centered"><div class="column has-text-centered">
+      <h1 class="title is-1 publication-title">Do Motion Tokenizers for<br class="wide-break"> Co-Speech Gesture Generation<br class="wide-break"> Encode Gesture Semantics?</h1>
+      <p class="publication-venue"><a href="https://aclanthology.org/2026.mint-1.11/" target="_blank" rel="noopener">MINT Workshop @ EMNLP 2026</a></p>
+      <div class="is-size-5 publication-authors author-list">
+        <span class="author-block"><a href="https://varsha33.github.io/" target="_blank" rel="noopener">Varsha Suresh</a><sup>1,2,*</sup>,</span>
+        <span class="author-block">Divij Jain<sup>3,*,†</sup>,</span>
+        <span class="author-block">Jia Liu<sup>1</sup>,</span>
+        <span class="author-block">M. Hamza Mughal<sup>2</sup>,</span>
+        <span class="author-block">Vera Demberg<sup>1,2</sup></span>
+      </div>
+      <div class="publication-authors affiliations">
+        <span class="author-block"><sup>1</sup>Saarland University</span><br>
+        <span class="author-block"><sup>2</sup>Max Planck Institute for Informatics, Saarland Informatics Campus</span><br>
+        <span class="author-block"><sup>3</sup>IIT Delhi</span>
+      </div>
+      <p class="author-note">* Equal contribution &nbsp; · &nbsp; † Work done during an internship at MPI for Informatics</p>
+      <div class="publication-links">
+        <span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="https://aclanthology.org/2026.mint-1.11.pdf" target="_blank" rel="noopener"><span class="icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6zM14 2v5h5M9 12h6M9 16h6"/></svg></span><span>Paper</span></a></span>
+        <span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="https://arxiv.org/abs/2610.03765" target="_blank" rel="noopener"><span>arXiv</span></a></span>
+        <span class="link-block"><a class="external-link button is-normal is-rounded is-dark" href="#citation"><span aria-hidden="true">❞ &nbsp;</span><span>BibTeX</span></a></span>
+      </div>
+    </div></div>
+  </div></div>
+</section>
+<section class="hero teaser">
+  <div class="container is-max-desktop"><div class="hero-body">
+    <figure><a href="figure-3.png" target="_blank" rel="noopener"><img src="figure-3.png" width="1156" height="572" alt="Original Figure 3: reconstructed upper-body geometry is preserved while fine hand poses lose detail."></a>
+      <figcaption>Original vs. reconstruction · Figure 3 from the paper</figcaption></figure>
+    <h2 class="subtitle has-text-centered">Accurate body motion does not, by itself, guarantee that a tokenizer preserves communicatively important details.</h2>
+  </div></div>
+</section>
+<section id="abstract" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading"><h2>Abstract</h2></div>
+        <div class="abstract-copy"><p>Discrete motion tokenizers encode motion as atomic units and are widely used for co-speech gesture generation. It remains unclear which motion properties, especially those relevant to gesture semantics, are recoverable from these codebooks. We probe a reconstruction-trained codebook using 19 co-speech gesture descriptors spanning from raw motion to abstract communicative function. Results show that geometry and handedness are readily decodable from token embeddings, while motion category is only weakly decoded despite showing systematic differences in discrete code usage. This gap between reconstruction quality and descriptor decodability suggests that reconstruction objectives alone do not guarantee that gesture semantics are captured, and that evaluating codebooks on such properties can guide the design of more semantic motion tokenizers.</p><p class="source-note">Original abstract. <a href="paper.pdf#page=1" target="_blank" rel="noopener">Paper, p. 1 ↗</a></p></div>
+      </div></section>
+<section id="method" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading"><h2>Probing embeddings and discrete code usage</h2></div>
+        <p class="section-intro">Can a descriptor be decoded from pooled token embeddings? Do its classes use different discrete codes? The study examines both.</p>
+        <figure class="method-figure">
+          <div class="pipeline"><div class="pipeline-input"><span class="mini-label">Input</span><strong>3D gesture motion</strong><span>38-joint upper-body skeleton</span></div><span class="flow-arrow" aria-hidden="true">→</span><div class="pipeline-model"><span class="mini-label">Reconstruction-trained VQ-VAE</span><strong>Body stream <span>+</span> Hand stream</strong><span>Separate encoders and codebooks</span></div><span class="flow-arrow" aria-hidden="true">→</span><div class="pipeline-output"><span class="mini-label">Representation</span><strong>Discrete motion tokens</strong><span>Body and hand token sequences</span></div></div>
+          <div class="branch-divider"><span>Two complementary analyses</span></div>
+          <div class="analysis-branches"><div><span class="branch-label">A · Sequence level</span><h3>Probe pooled embeddings</h3><p>Mean-pool token embeddings, then predict each descriptor with a linear probe and a shallow MLP.</p><span class="metric-label">5-fold cross-validation · Macro-F1</span></div><div><span class="branch-label">B · Code level</span><h3>Compare code usage</h3><p>Compare class-average code-frequency profiles and measure how informative individual code activations are.</p><span class="metric-label">JS divergence · Mutual information · FDR-corrected tests</span></div></div>
+          <figcaption>Simplified method schematic based on §§3.2–3.3 and Appendix A.1.2. <a href="paper.pdf#page=2" target="_blank" rel="noopener">Method in the paper ↗</a></figcaption>
+        </figure>
+        <details class="detail-box"><summary>Model and evaluation details</summary><div class="detail-body"><p>The primary model has latent dimension <strong>256</strong>, codebook size <strong>2,048</strong>, and temporal downsampling factor <strong>4</strong>. It is trained on combined BEAT and TED motion using position reconstruction and VQ commitment losses.</p><p>The body stream contains 8 coarse joints and the hand stream 30 finger joints; a shared decoder reconstructs the full pose. The configuration sweep contains 27 models. Probing is complemented by a comparison with EMAGE and by correlations between macro-F1 and mean per-joint position error (MPJPE).</p><p>The linear probe is multinomial logistic regression with balanced class weights; the MLP has one 128-unit ReLU layer. Both use the same five folds and class balancing. Code-level separation is tested with label permutations and Benjamini–Hochberg correction across descriptors within each stream. MI sums the information between individual code presence and descriptor labels.</p><p class="source-note">Paper §3; Appendix A.1.2. Training corpus and the 778-clip probing set serve different roles.</p></div></details>
+      </div></section>
+<section id="descriptors" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading"><h2>From motion geometry to communicative function</h2></div>
+        <p class="section-intro">The 19-descriptor panel combines skeleton-derived measurements with human annotations. Expand a group to see the descriptors.</p>
+        <div class="descriptor-grid">
+          <details class="descriptor"><summary><span class="descriptor-index">01</span><span>Motion dynamics<small>2 descriptors · Manual</small></span><span class="plus" aria-hidden="true">+</span></summary><div><p>Gesture size · Kinematics</p></div></details>
+          <details class="descriptor"><summary><span class="descriptor-index">02</span><span>Spatial geometry<small>9 descriptors · Automatic</small></span><span class="plus" aria-hidden="true">+</span></summary><div><p>Left / right vertical position, horizontal position, depth and elbow bend · Hand reach</p></div></details>
+          <details class="descriptor"><summary><span class="descriptor-index">03</span><span>Handedness<small>1 descriptor · Manual</small></span><span class="plus" aria-hidden="true">+</span></summary><div><p>Handedness: one hand or both hands</p></div></details>
+          <details class="descriptor"><summary><span class="descriptor-index">04</span><span>Annotated spatial form<small>4 descriptors · Manual</small></span><span class="plus" aria-hidden="true">+</span></summary><div><p>Hand orientation · Spatial radial position · Spatial height · Spatial distance</p></div></details>
+          <details class="descriptor"><summary><span class="descriptor-index">05</span><span>Handshape<small>1 descriptor · Manual</small></span><span class="plus" aria-hidden="true">+</span></summary><div><p>Handshape: palm, cup, pinch, fist, bunch, fingers, index finger</p></div></details>
+          <details class="descriptor"><summary><span class="descriptor-index">06</span><span>Motion pattern and function<small>2 descriptors · Manual</small></span><span class="plus" aria-hidden="true">+</span></summary><div><p>Motion category · Communicative intent</p></div></details>
+        </div><p class="source-note">Descriptor names and annotation types follow Tables 2–3. <a href="paper.pdf#page=7" target="_blank" rel="noopener">Full class labels ↗</a></p>
+      </div></section>
+<section id="results" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading"><h2>Geometry is more recoverable from pooled embeddings</h2></div>
+        <p class="section-intro">Both architectures show a similar accessibility gradient: strong spatial geometry and handedness, with much weaker handshape, motion category and communicative intent.</p>
+        <div class="results-layout">
+          <div class="results-visual">
+            <div class="chart-tabs" role="tablist" aria-label="Result figures"><button id="tab-groups" type="button" role="tab" aria-selected="true" aria-controls="panel-groups" tabindex="0">Across codebooks</button><button id="tab-descriptors" type="button" role="tab" aria-selected="false" aria-controls="panel-descriptors" tabindex="-1">All 19 descriptors</button></div>
+            <div id="panel-groups" role="tabpanel" aria-labelledby="tab-groups"><figure><a class="figure-link" href="figure-2.png" target="_blank" rel="noopener" aria-label="Open Figure 2 at full resolution"><img src="figure-2.png" width="1159" height="777" alt="Original Figure 2: VQ-VAE and EMAGE mean macro-F1 by descriptor group. Spatial geometry and handedness score highest; handshape and motion pattern and function score lowest." loading="lazy"></a><figcaption>Figure 2 · Group-level probe macro-F1 for VQ-VAE and EMAGE. Higher is better. <a href="paper.pdf#page=4" target="_blank" rel="noopener">Paper, p. 4 ↗</a></figcaption></figure><details class="chart-values"><summary>View exact values as a table</summary><div class="table-scroll"><table><caption>Values printed in Figure 2</caption><thead><tr><th scope="col">Descriptor group</th><th scope="col">VQ-VAE</th><th scope="col">EMAGE</th></tr></thead><tbody><tr><th scope="row">Motion dynamics</th><td>0.49</td><td>0.46</td></tr><tr><th scope="row">Spatial geometry</th><td>0.77</td><td>0.61</td></tr><tr><th scope="row">Handedness</th><td>0.73</td><td>0.75</td></tr><tr><th scope="row">Annotated spatial form</th><td>0.30</td><td>0.28</td></tr><tr><th scope="row">Handshape</th><td>0.15</td><td>0.19</td></tr><tr><th scope="row">Motion pattern and function</th><td>0.11</td><td>0.11</td></tr></tbody></table></div><p class="source-note">Figure 2 labels VQ-VAE handshape as 0.15; Table 1 reports 0.16. Each is retained as printed in its source.</p></details></div>
+            <div id="panel-descriptors" role="tabpanel" aria-labelledby="tab-descriptors" hidden><figure><a class="figure-link" href="figure-1.png" target="_blank" rel="noopener" aria-label="Open Figure 1 at full resolution"><img src="figure-1.png" width="1149" height="1046" alt="Original Figure 1: macro-F1 for all 19 descriptors with majority-class and random baselines. Left and right depth reach 0.90 and 0.91, while handshape, motion category and communicative intent reach 0.15, 0.10 and 0.12." loading="lazy"></a><figcaption>Figure 1 · Linear probe macro-F1, with majority-class and random baselines. <a href="paper.pdf#page=4" target="_blank" rel="noopener">Paper, p. 4 ↗</a></figcaption></figure><p class="source-note">Exact descriptor-level values and baselines are reported in <a href="paper.pdf#page=9" target="_blank" rel="noopener">Table 4, p. 9 ↗</a>.</p></div>
+          </div>
+          <aside class="results-reading" aria-label="How to interpret the results"><p class="eyebrow">Reading the results</p><div><span class="reading-number">01</span><h3>Geometry and handedness</h3><p>Spatial geometry and handedness are readily decoded from pooled token embeddings.</p></div><div><span class="reading-number">02</span><h3>A second view matters</h3><p>Motion category has low pooled-probe scores, yet its classes show significant differences in code usage: <strong>MI = 3.790, q = 0.006</strong>.</p></div><div><span class="reading-number">03</span><h3>No reliable overall separation</h3><p>Handshape (<strong>q = 0.697</strong>) and communicative intent (<strong>q = 0.063</strong>) do not reach the corrected 0.05 threshold.</p></div><p class="source-note">Interpretation: §4.1. MI and q-values follow Table 5, using the stream with the highest MI for each descriptor.</p></aside>
+        </div>
+        <details class="detail-box full-results"><summary>Group-level analysis: probes, code usage and reconstruction</summary><div class="detail-body"><div class="table-scroll" tabindex="0" role="region" aria-label="Scrollable results table"><table><caption>Table 1 · Group-level descriptor analysis</caption><thead><tr><th scope="col">Descriptor group</th><th scope="col">N</th><th scope="col">Linear F1 ↑</th><th scope="col">MLP F1 ↑</th><th scope="col">MI ↑</th><th scope="col">Sig.</th><th scope="col">r(F1, MPJPE)</th></tr></thead><tbody><tr><th scope="row">Motion dynamics</th><td>2</td><td>0.49 ± 0.07</td><td>0.52 ± 0.08</td><td>0.35</td><td>1/2</td><td>−0.26</td></tr><tr><th scope="row">Spatial geometry</th><td>9</td><td>0.77 ± 0.01</td><td>0.74 ± 0.03</td><td>1.07</td><td>9/9</td><td>−0.69</td></tr><tr><th scope="row">Handedness</th><td>1</td><td>0.73 ± 0.03</td><td>0.66 ± 0.05</td><td>0.77</td><td>1/1</td><td>−0.89</td></tr><tr><th scope="row">Annotated spatial form</th><td>4</td><td>0.30 ± 0.01</td><td>0.31 ± 0.02</td><td>1.06</td><td>3/4</td><td>−0.48</td></tr><tr><th scope="row">Handshape</th><td>1</td><td>0.16 ± 0.03</td><td>0.20 ± 0.07</td><td>1.50</td><td>0/1</td><td>−0.67</td></tr><tr><th scope="row">Motion pattern and function</th><td>2</td><td>0.11 ± 0.02</td><td>0.12 ± 0.01</td><td>3.62*</td><td>1/2</td><td>−0.45</td></tr></tbody></table></div><p class="source-note">F1 values reproduce the mean ± SD across descriptors reported in Table 1. N is the number of descriptors. Sig. counts descriptors with significant JS segregation. More negative r means lower reconstruction error is associated with higher probe F1. * Group-level MI is driven primarily by motion category. <a href="paper.pdf#page=3" target="_blank" rel="noopener">Original Table 1 ↗</a></p></div></details>
+      </div></section>
+<section id="case-study" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading"><h2>Fine hand details are less faithfully reconstructed</h2></div>
+        <div class="case-layout"><figure><a href="figure-3.png" target="_blank" rel="noopener" aria-label="Open Figure 3 at full resolution"><img src="figure-3.png" width="1156" height="572" alt="Original and reconstructed poses from Figure 3. The overall upper-body geometry remains similar, while the finger configuration loses detail." loading="lazy"></a><figcaption>Figure 3 · Original paper figure, cropped from p. 4 without changing its content.</figcaption></figure><div><p class="eyebrow">Qualitative case study</p><h3>Upper-body geometry and handshape</h3><p>The paper’s example shows upper-body geometry being preserved while fine hand poses are averaged out. The authors relate this pattern to the scale difference between hand joints and upper-body joints in the reconstruction objective.</p><p class="source-note">Qualitative evidence from §5; this example is not a separate quantitative evaluation.</p></div></div>
+      </div></section>
+<section id="discussion" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading"><h2>Evaluate beyond reconstruction</h2></div>
+        <div class="takeaway"><p>Good reconstruction alone is not a sufficient measure of semantic accessibility.</p><span>Use both descriptor probes and code-level analyses to examine what a motion tokenizer preserves.</span></div>
+        <div class="discussion-grid"><div><h3>What the study suggests</h3><p>Future tokenizers should explicitly preserve communicatively relevant properties. The agreement between two architectures suggests that the observed gradient is not specific to one tokenizer design.</p></div><div><h3>What the study does not establish</h3><p>Low probe performance does not prove that a property is entirely absent. The study uses 778 TED clips, two skeleton-based tokenizers, and selected pooled representations and probe families; sequence-aware models may access information differently.</p></div></div><p class="source-note">Conclusion and limitations, pp. 4–5. The contribution of BEAT versus TED to training was not ablated; some manual labels are sparse and may involve annotation subjectivity.</p>
+      </div></section>
+<section id="citation" class="section research-section"><div class="container is-max-desktop">
+        <div class="section-heading citation-heading"><div><h2>BibTeX</h2></div><button class="copy-button" id="copy-bibtex" type="button">Copy BibTeX <span aria-hidden="true">⧉</span></button></div>
+        <pre><code id="bibtex">@inproceedings{suresh-etal-2026-motion,
+    title = "Do Motion Tokenizers for Co-Speech Gesture Generation Encode Gesture Semantics?",
+    author = "Suresh, Varsha  and
+      Jain, Divij  and
+      Liu, Jia  and
+      Mughal, M. Hamza  and
+      Demberg, Vera",
+    editor = "Ghaleb, Esam  and
+      Takmaz, Ece  and
+      Frassinelli, Diego  and
+      Khaertdinov, Bulat  and
+      Fern{\'a}ndez, Raquel  and
+      Yumak, Zerrin  and
+      Ozyurek, Asli",
+    booktitle = "Proceedings of the 1st Workshop on Multimodal Interaction in Face-to-Face Dialogue",
+    month = oct,
+    year = "2026",
+    address = "Budapest, Hungary",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2026.mint-1.11/",
+    pages = "96--104",
+    ISBN = "979-8-89176-482-8"
+}</code></pre><p class="source-note"><a href="citation.bib" download>Download BibTeX</a> · Conference citation from <a href="https://aclanthology.org/2026.mint-1.11/" target="_blank" rel="noopener">ACL Anthology ↗</a>. Page content and figure references follow the arXiv v1 version. <span id="copy-status" role="status" aria-live="polite"></span></p>
+        <details class="acknowledgments"><summary>Acknowledgments</summary><p>This work is funded in part by the Deutsche Forschungsgemeinschaft (DFG, German Research Foundation) — GRK 2853/1 “Neuroexplicit Models of Language, Vision, and Action” — project number 471607914.</p></details>
+      </div></section>
+</main>
+<footer class="footer"><div class="container is-max-desktop"><div class="content has-text-centered">
+  <p>Website layout adapted from <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a>, following the <a href="https://anisha0325.github.io/MUStReason-Project/" target="_blank" rel="noopener">MUStReason project page</a>.</p>
+  <p>Template and layout adaptations: <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>. Research content and figures are credited to the paper’s authors.</p>
+  <p><a href="#main">Back to top ↑</a></p>
+</div></div></footer>
+</body></html>
