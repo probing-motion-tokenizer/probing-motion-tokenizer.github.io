@@ -104,3 +104,19 @@ pre code{font:12px/1.7 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:p
  pre code{font-size:10px}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* Research examples: quiet, white presentation following the academic template. */
+.example-tabs{flex-wrap:wrap;gap:8px;margin-top:1.8rem}
+.example-tabs button{font-size:14px;padding:8px 15px}
+.example-title{text-align:center;font-size:1.1rem;font-weight:500;margin:22px 0 10px}
+.example-panels figure{width:100%;max-width:960px;margin:0 auto}
+.example-panels img{width:100%}
+.citation-actions{display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-top:15px;font-size:14px}
+.table-key{font-size:14px;line-height:1.7;margin-top:15px}
+@media(max-width:600px){
+ .example-tabs{display:grid;grid-template-columns:1fr 1fr}
+ .example-tabs button{font-size:12px;padding:8px 6px}
+ .example-title{font-size:1rem}
+ .example-panels figure{max-width:500px}
+ .example-panels img{aspect-ratio:500/960}
+}

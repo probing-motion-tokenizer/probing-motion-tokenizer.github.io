@@ -19,6 +19,17 @@ Research figures and the locally linked PDF reproduce the arXiv v1 version.
 The main Paper button links to the official conference PDF.
 The downloadable citation follows ACL Anthology.
 
+## Reconstruction examples
+The `examples/` folder contains vector paths extracted from the author-supplied
+PDFs `clip_1421_palm.pdf`, `clip_1252_palm.pdf`, and `clip_1453_cup.pdf`.
+The four comparisons are 1421 at t=0,1,2 (left hand), 1252 at t=0,1,2
+and t=4,5,6 separately (right hand), and 1453 at t=7,8,9 (left hand).
+Hand circles and a close-up of the final time point are added for comparison.
+Source pose coordinates and finger colors are preserved; only uniform scaling
+and placement are changed. Hand side follows the supplied visual instructions.
+Each comparison has a desktop SVG and a two-column mobile SVG, selected with
+`picture` at a 600px breakpoint. They show the same six source poses.
+
 ## Template attribution
 Adapted from [Nerfies](https://github.com/nerfies/nerfies.github.io), following
 the [MUStReason project page](https://anisha0325.github.io/MUStReason-Project/).

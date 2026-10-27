@@ -1,26 +1,28 @@
 (() => {
   'use strict';
-  const tabs = [...document.querySelectorAll('[role="tab"]')];
-  const activateTab = (active) => {
-    tabs.forEach(tab => {
-      const selected = tab === active;
-      tab.setAttribute('aria-selected', String(selected));
-      tab.tabIndex = selected ? 0 : -1;
-      document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
-    });
-  };
-  tabs.forEach((tab, index) => {
-    tab.addEventListener('click', () => activateTab(tab));
-    tab.addEventListener('keydown', event => {
-      let target;
-      if (event.key === 'ArrowRight') target = tabs[(index + 1) % tabs.length];
-      if (event.key === 'ArrowLeft') target = tabs[(index + tabs.length - 1) % tabs.length];
-      if (event.key === 'Home') target = tabs[0];
-      if (event.key === 'End') target = tabs[tabs.length - 1];
-      if (!target) return;
-      event.preventDefault();
-      activateTab(target);
-      target.focus();
+  document.querySelectorAll('[role="tablist"]').forEach(tablist => {
+    const tabs = [...tablist.querySelectorAll('[role="tab"]')];
+    const activateTab = active => {
+      tabs.forEach(tab => {
+        const selected = tab === active;
+        tab.setAttribute('aria-selected', String(selected));
+        tab.tabIndex = selected ? 0 : -1;
+        document.getElementById(tab.getAttribute('aria-controls')).hidden = !selected;
+      });
+    };
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', () => activateTab(tab));
+      tab.addEventListener('keydown', event => {
+        let target;
+        if (event.key === 'ArrowRight') target = tabs[(index + 1) % tabs.length];
+        if (event.key === 'ArrowLeft') target = tabs[(index + tabs.length - 1) % tabs.length];
+        if (event.key === 'Home') target = tabs[0];
+        if (event.key === 'End') target = tabs[tabs.length - 1];
+        if (!target) return;
+        event.preventDefault();
+        activateTab(target);
+        target.focus();
+      });
     });
   });
   const copyButton = document.getElementById('copy-bibtex');
