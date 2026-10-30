@@ -29,12 +29,3 @@ Source pose coordinates and finger colors are preserved; only uniform scaling
 and placement are changed. Hand side follows the supplied visual instructions.
 Each comparison has a desktop SVG and a two-column mobile SVG, selected with
 `picture` at a 600px breakpoint. They show the same six source poses.
-
-## Template attribution
-Adapted from [Nerfies](https://github.com/nerfies/nerfies.github.io), following
-the [MUStReason project page](https://anisha0325.github.io/MUStReason-Project/).
-The template and layout adaptations are licensed under
-[CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
-bulma.min.css is Bulma by Jeremy Thomas, licensed under MIT; its license
-notice is retained in the file. Research content remains credited to the authors
-under its original terms. No analytics code from the template is included.
